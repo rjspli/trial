@@ -1,4 +1,10 @@
 #include <stdio.h>
+#include <string.h>
+#include "commonType.h"
+#include "initAndTerm.h"
+#include "dataControl.h"
+
+node *head, *tail;
 
 int printMenu(){
 	int num;
@@ -31,9 +37,20 @@ int printMenu(){
 	}
 	return 0;
 }
-		
+
 
 int main(int argc, char **argv){
+	head = createHeadTailNode();
+	tail = createHeadTailNode();
+	memset(head, '\0', sizeof(node));
+	memset(head, '\0', sizeof(node));
+
+	head->next = (elem*)tail;
+	head->prev = (elem*)tail;
+
+	tail->next = (elem*)head;
+	tail->prev = (elem*)head;
+
 	printMenu();
 	return 0;
 }
