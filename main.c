@@ -3,6 +3,7 @@
 #include "commonType.h"
 #include "initAndTerm.h"
 #include "dataControl.h"
+#include "fileLoadWrite.h"
 
 node *head, *tail;
 
@@ -19,16 +20,16 @@ int printMenu(){
 		while(getchar() != '\n');
 		switch(num){
 		case 1:
-			//TODO
+			selectInsert();
 			continue;
 		case 2:
-			//TODO
+			selectDelete();
 			continue;
 		case 3:
-			//TODO
+			selectPrint();
 			continue;
 		case 4:
-			//TODO
+			selectEnd();
 			return 0;
 		default:
 			printf("다시 선택하세요.\n");
@@ -38,19 +39,20 @@ int printMenu(){
 	return 0;
 }
 
-
-int main(int argc, char **argv){
+int main(int argc, char *argv[]){
 	head = createHeadTailNode();
 	tail = createHeadTailNode();
 	memset(head, '\0', sizeof(node));
 	memset(head, '\0', sizeof(node));
 
-	head->next = (elem*)tail;
-	head->prev = (elem*)tail;
+	head->next = (elem *)tail;
+	head->prev = (elem *)tail;
 
-	tail->next = (elem*)head;
-	tail->prev = (elem*)head;
-
+	tail->next = (elem *)head;
+	tail->prev = (elem *)head;
+	
+	loadData(head, tail);
+	printNode(head, tail);
 	printMenu();
 	return 0;
 }
