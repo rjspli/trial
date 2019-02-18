@@ -4,7 +4,7 @@
 #include "commonType.h"
 #include "initAndTerm.h"
 
-node *createHeadTailNode(){
+node* createHeadTailNode(){
 	node *dummy;
 	dummy = (node*)malloc(sizeof(node));
 	memset(dummy, '\0', sizeof(node));
@@ -15,7 +15,7 @@ int releaseNode(node *head, node *tail){
     elem *list, *oldData;
 
     list = head->next;
-    while( list != (elem *)tail){
+    while(list != (elem *)tail){
         oldData = list;
         list = list->next;
         free(oldData);
