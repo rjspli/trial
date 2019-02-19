@@ -39,7 +39,7 @@ void saveData(node *head, node *tail){
 	elem *list;
 	const char *f = "file.txt";
 	if((fp = fopen(f, "wt")) == NULL){
-		printf("File save error\n");
+		printf("file write error\n");
 		return;
 	}
 	list = head->next;
