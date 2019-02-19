@@ -62,8 +62,9 @@ int deleteNode(node *head, node *tail, int num){
 int printNode(node *head, node *tail){
 	elem *list;
 	list = head->next;
+	printf("|번호|이름|나이|\n");
 	while(list != (elem*)tail){
-		printf("번호:%d, 이름:%s, 나이:%d\n"
+		printf("|%d|%s|%d|\n"
 		, list->num, list->name, list->age);
 		list = list->next;
 	}
