@@ -8,7 +8,7 @@ void loadData(node *head, node *tail){
 	elem *oldData, *newData;
 	const char *f = "file.txt";
 	if((fp=fopen(f,"r"))==NULL ){
-		printf("File not Exist\n");
+		printf("load file not Exist\n");
 		return;
 	}
 	newData = (elem *)malloc(sizeof(elem));

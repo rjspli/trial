@@ -9,31 +9,31 @@ node *head, *tail;
 
 int printMenu(){
 	int num;
+	int (*pF[4])();
+	int res = -1;
+	pF[0] = selectInsert;
+	pF[1] = selectDelete;
+	pF[2] = selectPrint;
+	pF[3] = selectEnd;
 	while(1) {
 		puts("");
 		puts("1. 입력");
 		puts("2. 삭제");
 		puts("3. 출력");
 		puts("4. 종료");
-		puts("메뉴선택:" );
+		printf("메뉴선택:" );
 		scanf("%d", &num);
 		while(getchar() != '\n');
-		switch(num){
-		case 1:
-			selectInsert();
-			continue;
-		case 2:
-			selectDelete();
-			continue;
-		case 3:
-			selectPrint();
-			continue;
-		case 4:
-			selectEnd();
-			return 0;
-		default:
+		puts("");
+		if(num > 0 && num < 5){
+			exeFunc(pF, (num-1), &res);
+			printf("실행결과:%d\n", res);
+		}else{
 			printf("다시 선택하세요.\n");
 			continue;
+		}
+		if(num == 4){
+			return 0;
 		}
 	}
 	return 0;

@@ -8,6 +8,12 @@
 
 extern node *head, *tail;
 
+int exeFunc(int (**pF)(void), int sel, int *ret){
+	pF[sel]();
+	*ret = 0;
+	return 0;
+}
+
 int insertNode(node *head, node *tail, elem data){
 	elem *newNode, *list;
 	list = (elem *)head;
@@ -66,11 +72,11 @@ int printNode(node *head, node *tail){
 
 int selectInsert(){
 	elem data;
-	printf("\n번호를 입력하세요: ");
+	printf("번호를 입력하세요: ");
 	scanf("%d", &data.num);
 	while(getchar() != '\n');
 
-	printf("\n이름을 입력하세요 (제한글자수 %d): "
+	printf("이름을 입력하세요 (제한글자수 %d): "
 		, (int)sizeof(data.name)-1);
 	fgets(data.name, sizeof(data.name), stdin);
 	if(data.name[strlen(data.name)-1] == '\n'){
@@ -78,7 +84,7 @@ int selectInsert(){
 	}
 	fflush(stdin);
 
-	printf("\n나이를 입력하세요: ");
+	printf("나이를 입력하세요: ");
 	scanf("%d", &data.age);
 	while(getchar() != '\n');
 	insertNode(head, tail, data);
