@@ -18,6 +18,15 @@ int getSelection(void){
 	return selectNum;
 }
 
+int getData(void){
+	int num = 0;
+
+	printf("번호를 입력하세요: ");
+	scanf("%d", &num);
+	while(getchar() != '\n');
+	return num;
+}
+
 int main(int argc, char* argv[]){
 	int selNum = 0;
 	Node* root = NULL;
