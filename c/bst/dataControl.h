@@ -5,8 +5,10 @@ void selectInsert();
 void selectDelete();
 void selectPrint();
 void selectEnd();
+void printNode(Node** root);
 void insertNode(Node** root, Node* insNode);
-Node* searchSameNode(Node** root, int num);
+void deleteNode(Node** root, int num);
 void releaseNode(Node** root);
+Node* searchSameNode(Node** root, int num);
 
 #endif
