@@ -22,7 +22,8 @@ int printMenu(){
 		puts("3. 출력");
 		puts("4. 종료");
 		printf("메뉴선택:" );
-		scanf("%d", &num);
+		if(scanf("%d", &num) == 0){
+		}
 		while(getchar() != '\n');
 		puts("");
 		if(num > 0 && num < 5){

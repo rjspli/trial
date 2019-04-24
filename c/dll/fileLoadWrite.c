@@ -5,7 +5,7 @@
 
 void loadData(node *head, node *tail){
 	FILE *fp;
-	elem *oldData, *newData;
+	elem *oldData=NULL, *newData=NULL;
 	const char *f = "file.txt";
 	if((fp=fopen(f,"r"))==NULL ){
 		printf("load file not Exist\n");

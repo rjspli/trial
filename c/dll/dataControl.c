@@ -74,19 +74,22 @@ int printNode(node *head, node *tail){
 int selectInsert(){
 	elem data;
 	printf("번호를 입력하세요: ");
-	scanf("%d", &data.num);
+	if(scanf("%d", &data.num) == 0){
+	}
 	while(getchar() != '\n');
 
 	printf("이름을 입력하세요 (제한글자수 %d): "
 		, (int)sizeof(data.name)-1);
-	fgets(data.name, sizeof(data.name), stdin);
+	if(fgets(data.name, sizeof(data.name), stdin) == 0){
+	}
 	if(data.name[strlen(data.name)-1] == '\n'){
 		data.name[strlen(data.name)-1] = '\0';
 	}
 	fflush(stdin);
 
 	printf("나이를 입력하세요: ");
-	scanf("%d", &data.age);
+	if(scanf("%d", &data.age) == 0){
+	}
 	while(getchar() != '\n');
 	insertNode(head, tail, data);
 
@@ -96,7 +99,8 @@ int selectInsert(){
 int selectDelete(){
 	int num;
 	printf("번호를 입력하세요: ");
-	scanf("%d", &num);
+	if(scanf("%d", &num) == 0){
+	}
 	deleteNode(head, tail, num);
 	return 0;
 }
