@@ -15,8 +15,9 @@ int InitAndTerm::printMenu()
 
 	while(1) {
 		puts("");
-		puts("1.print");
-		puts("2.close");
+		puts("1.insert");
+		puts("2.print");
+		puts("3.close");
 		printf("menu select: ");
 		scanf("%d", &num);
 		while (getchar() != '\n');
@@ -36,7 +37,7 @@ int InitAndTerm::printMenu()
 }
 void InitAndTerm::loadData(Node<Format> *head, Node<Format> *tail) {
 	FILE *fp;
-	int num, age, cnt;
+	int num = -1, age = -1, cnt=0;
 	char tempName[NAME_LENGTH] = { '\0', };
 	Element<Format> *oldData, *newData;
 	const char *savedFile = "file.txt";
@@ -55,20 +56,24 @@ void InitAndTerm::loadData(Node<Format> *head, Node<Format> *tail) {
 		data.setMember(num, age, tempName);
 
 		newData->setData(data);
-		head->setCnt(++cnt);
-		tail->setCnt(++cnt);
+		cnt++;
+		head->setCnt(cnt);
+		tail->setCnt(cnt);
 		oldData = newData;
 
 		newData = new Element<Format>(data);
 		oldData->setNext(newData);
 		newData->setPrev(oldData);
 	}
+
 	if (head->getCnt() == 0) {
 		head->setNext(static_cast<Element<Format>*>(tail));
+		tail->setPrev(static_cast<Element<Format>*>(head));
 	} else {
 		oldData->setNext(static_cast<Element<Format>*>(tail));
 		tail->setPrev(oldData);
 	}
+
 	delete newData;
 	fclose(fp);
 }

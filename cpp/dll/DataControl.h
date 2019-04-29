@@ -7,7 +7,9 @@ class DataControl
 private:
 public:
 	DataControl();
+	int insertNode(Node<Format> *head, Node<Format> *tail, Format data);
 	int printNode(Node<Format> *head, Node<Format> *tail);
+	int selectInsert(void);
 	int selectPrint(void);
 	int selectEnd(void);
 	int exeFunction(int num, int &res);
