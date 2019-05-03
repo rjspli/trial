@@ -77,6 +77,22 @@ void InitAndTerm::loadData(Node<Format> *head, Node<Format> *tail) {
 	delete newData;
 	fclose(fp);
 }
+void InitAndTerm::saveData(Node<Format> *head, Node<Format> *tail) {
+	FILE *fp;
+	Element<Format> *list;
+	const char *fileName = "file.txt";
+	if ((fp = fopen(fileName, "wt")) == NULL) {
+		cout << "file write error" << endl;
+		return;
+	}
+	list = head->getNext();
+	while (list != static_cast<Element<Format>*>(tail)) {
+		fprintf(fp, "%d %s %d\n", list->getData().getNum(),
+			list->getData().getName(), list->getData().getAge() );
+		list = list->getNext();
+	}
+	fclose(fp);
+}
 Node<Format>* InitAndTerm::createHeadTailNode()
 {
 	char dummyName[10] = "dummy";

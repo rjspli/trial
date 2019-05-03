@@ -84,6 +84,7 @@ int DataControl::selectPrint(void) {
 	return 0;
 }
 int DataControl::selectEnd(void) {
+	cInt->saveData(head, tail);
 	cInt->releaseNode(head, tail);
 	return 0;
 }
