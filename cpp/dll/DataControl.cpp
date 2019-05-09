@@ -13,8 +13,9 @@ extern InitAndTerm *cInt;
 DataControl::DataControl()
 {
 	_pf[0] = &DataControl::selectInsert;
-	_pf[1] = &DataControl::selectPrint;
-	_pf[2] = &DataControl::selectEnd;
+	_pf[1] = &DataControl::selectDelete;
+	_pf[2] = &DataControl::selectPrint;
+	_pf[3] = &DataControl::selectEnd;
 }
 int DataControl::insertNode(Node<Format> *head, Node<Format> *tail, Format data) {
 	Element<Format> *newNode, *list;
@@ -43,6 +44,31 @@ int DataControl::insertNode(Node<Format> *head, Node<Format> *tail, Format data)
 
 	head->setCnt(head->getCnt() + 1);
 	tail->setCnt(tail->getCnt() + 1);
+	return 0;
+}
+int DataControl::deleteNode(Node<Format> *head, Node<Format> *tail, int num) {
+	Element<Format> *list;
+	list = head->getNext();
+	while (list != static_cast<Element<Format>*>(tail)) {
+		if ((list->getData()).getNum() == num) {
+			if( list->getPrev() == static_cast<Element<Format>*>(head) ){
+				static_cast<Node<Format>*>( list->getPrev() )->setNext(list->getNext());
+			}else {
+				list->getPrev()->setNext(list->getNext());
+			}
+			if (list->getNext() == static_cast<Element<Format>*>(tail)) {
+				static_cast<Node<Format>*>( list->getNext() )->setPrev(list->getPrev());
+			}else {
+				list->getNext()->setPrev(list->getPrev());
+			}
+			head->setCnt(head->getCnt() - 1);
+			tail->setCnt(tail->getCnt() - 1);
+			delete list;
+			return 0;
+		}
+		list = list->getNext();
+	}
+	cout << "no match number" << endl;
 	return 0;
 }
 int DataControl::printNode(Node<Format> *head, Node<Format> *tail) {
@@ -77,6 +103,14 @@ int DataControl::selectInsert(void) {
 
 	data.setMember(_num, _age, _tempName);
 	insertNode(head, tail, data);
+	return 0;
+}
+int DataControl::selectDelete() {
+	int num;
+	cout << "input number for delete: " << endl;
+	if (scanf("%d", &num) == 0) {
+	}
+	deleteNode(head, tail, num);
 	return 0;
 }
 int DataControl::selectPrint(void) {

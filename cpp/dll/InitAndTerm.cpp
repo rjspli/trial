@@ -16,8 +16,9 @@ int InitAndTerm::printMenu()
 	while(1) {
 		puts("");
 		puts("1.insert");
-		puts("2.print");
-		puts("3.close");
+		puts("2.delete");
+		puts("3.print");
+		puts("4.close");
 		printf("menu select: ");
 		scanf("%d", &num);
 		while (getchar() != '\n');
