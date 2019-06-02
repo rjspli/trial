@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "commonType.h"
 #include "dataControl.h"
+#include "initAndTerm.h"
 
 int insertTotalVertex(int *vCnt) {
 	printf("Input total vertex count\n");
@@ -115,5 +116,62 @@ int printNearList(graphType* g) {
 		}
 		printf("\n");
 	}
+	return 0;
+}
+int isQueueEmpty(LQType *LQ){
+	if(LQ->front == NULL){
+		printf("\nQueue empty.\n");
+		return 1;
+	}
+	else{
+		return 0;
+	}
+}
+int enQueue(LQType *LQ, int v){
+	queueNode *newNode = (queueNode *)malloc(sizeof(queueNode));
+	newNode->n = v;
+	newNode->link = NULL;
+	if(LQ->front == NULL){
+		LQ->front = newNode;
+		LQ->rear = newNode;
+	}else{
+		LQ->rear->link = newNode;
+		LQ->rear = newNode;
+	}
+	return 0;
+}
+int deQueue(LQType *LQ){
+	queueNode *oldNode = LQ->front;
+	int v;
+	if(isQueueEmpty(LQ)){
+		return 0;
+	}else{
+		v = oldNode->n;
+		LQ->front = LQ->front->link;
+		if(LQ->front == NULL){
+			LQ->rear = NULL;
+		}
+		free(oldNode);
+		return v;
+	}
+}
+int bfsNearList(graphType *g, int v){
+	graphNode *GN;
+	LQType *Q;
+	Q = createLQ();
+	g->visited[v] = TRUE;
+	printf("\n%c ", v+65);
+	enQueue(Q, v);
+	while(!isQueueEmpty(Q) ){
+		v = deQueue(Q);
+		for( GN = g->nearListHead[v];GN;GN=GN->link ){
+			if(!g->visited[GN->vertex]){
+				g->visited[GN->vertex] = TRUE;
+				printf("%c ", GN->vertex+65);
+				enQueue(Q, GN->vertex);
+			}
+		}
+	}
+	releaseLQ(&Q);
 	return 0;
 }
