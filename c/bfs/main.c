@@ -3,8 +3,10 @@
 #include "commonType.h"
 #include "initAndTerm.h"
 #include "dataControl.h"
+#include <mcheck.h>
 
 int main(int argc, char *argv[]){
+	mtrace();
 	graphType *graph;
 	int *tempVl;
 	int i = 0;
@@ -37,6 +39,13 @@ int main(int argc, char *argv[]){
 
 	printNearList(graph);
 
+	bfsNearList(graph, 0);
+	
+	releaseNearListHead(graph, vertexCreatedCnt);
+	
 	releaseBFSGraph(graph);
+	
+	free(graph);
 	return 0;
+	muntrace();
 }

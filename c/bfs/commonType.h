@@ -2,7 +2,7 @@
 #define _COMMONTYPE_H
 
 #define FALSE 0
-#define True 1
+#define TRUE 1
 
 typedef struct _graphNode{
 	int vertex;
@@ -14,4 +14,13 @@ typedef struct _graphType{
 	graphNode** nearListHead;
 	int* visited;
 } graphType;
+
+typedef struct _queueNode{
+	int n;
+	struct _queueNode *link;
+} queueNode;
+
+typedef struct _LQType{
+	queueNode *front, *rear;
+} LQType;
 #endif

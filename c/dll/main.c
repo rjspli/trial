@@ -44,7 +44,7 @@ int main(int argc, char *argv[]){
 	head = createHeadTailNode();
 	tail = createHeadTailNode();
 	memset(head, '\0', sizeof(node));
-	memset(head, '\0', sizeof(node));
+	memset(tail, '\0', sizeof(node));
 
 	head->next = (elem *)tail;
 	head->prev = (elem *)tail;
