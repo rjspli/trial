@@ -42,7 +42,12 @@ int inputVertexList(int **vList, int totalCnt, int vCnt) {
 		while (getchar() != '\n');
 		convDest = (int)dest - 97;
 		if (convDest == 29) {
-			break;
+			if(isNotExistAnyVertex(vList, totalCnt)){
+				printf("Least 1 vertex should be inserted\n");
+				continue;
+			}else{
+				break;
+			}
 		}
 		if (isSameDest(vList, totalCnt, convDest)) {
 			printf("Already input near vertex.\n");
@@ -54,6 +59,17 @@ int inputVertexList(int **vList, int totalCnt, int vCnt) {
 		}
 	}
 	return 0;
+}
+int isNotExistAnyVertex(int **compVlist, int totalCnt){
+	int i = 0, result = 1;
+	int *tempVlist = *compVlist;
+
+	for(i = 0; i < totalCnt; i++){
+		if(tempVlist[i] != -1){
+			result = 0;
+		}
+	}
+	return result;
 }
 int isSameDest(int **compVlist, int totalCnt, int dest) {
 	int i = 0, result = 0;
@@ -102,6 +118,34 @@ int insertEachEdge(graphType *g, int groupV, int v) {
 	node->link = g->nearListHead[groupV];
 	g->nearListHead[groupV] = node;
 	return 0;
+}
+int checkExistAcrossEdge(graphType *g, int groupV, int totalVertex){
+	int targetV = groupV;
+	int exist = 0;
+	graphNode* p = 	g->nearListHead[groupV];
+	graphNode* tempP;
+
+	while(p){
+		tempP = g->nearListHead[p->vertex];
+		exist = vertexAcrossEdge(&tempP, groupV);
+		if(exist != 1){
+			printf(" !! check vertex %c. There is not exist %c \n", p->vertex + 97, groupV + 97);
+		}
+		p = p->link;
+	}
+
+	return 0;
+}
+int vertexAcrossEdge(graphNode** tempV, int groupVnum){
+	int existResult = 0;
+	graphNode* tempP = *tempV;
+	while(tempP){
+		if(tempP->vertex == groupVnum){
+			existResult = 1;
+		}
+		tempP = tempP->link;
+	}
+	return existResult;
 }
 int printNearList(graphType* g) {
 	int i;
