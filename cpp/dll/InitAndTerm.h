@@ -6,10 +6,10 @@ class InitAndTerm
 {
 private:
 public:
-	void loadData(Node<Format> *head, Node<Format> *tail);
-	void saveData(Node<Format> *head, Node<Format> *tail);
-	int printMenu();
-	Node<Format>* createHeadTailNode();
-	int releaseNode(Node<Format> *head, Node<Format> *tail);
+    void loadData(Node<Format> *head, Node<Format> *tail);
+    void saveData(Node<Format> *head, Node<Format> *tail);
+    int printMenu();
+    Node<Format>* createHeadTailNode();
+    int releaseNode(Node<Format> *head, Node<Format> *tail);
 };
 #endif

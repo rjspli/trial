@@ -2,13 +2,13 @@
 #define _COMMONTYPE_H
 
 typedef struct _data{
-	int num;
+    int num;
 }Data;
 
 typedef struct _node{
-	struct _node* left;
-	struct _node* right;
-	Data* data;
+    struct _node* left;
+    struct _node* right;
+    Data* data;
 }Node;
 
 #endif
