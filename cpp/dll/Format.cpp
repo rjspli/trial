@@ -5,26 +5,26 @@ using namespace std;
 
 Format::Format(int num, int age, char *name) :_num(num), _age(age)
 {
-	strncpy(_name, name, sizeof(_name));
+    strncpy(_name, name, sizeof(_name));
 }
 void Format::showData()
 {
-	cout <<"|"<<_num<<"|"<<_age<<"|"<<_name << "|" << endl;
+    cout <<"|"<<_num<<"|"<<_age<<"|"<<_name << "|" << endl;
 }
 int Format::getNum()
 {
-	return _num;
+    return _num;
 }
 int Format::getAge()
 {
-	return _age;
+    return _age;
 }
 char* Format::getName()
 {
-	return _name;
+    return _name;
 }
 void Format::setMember(int num, int age, char *name) {
-	_num = num;
-	_age = age;
-	strncpy(_name, name, sizeof(_name));
+    _num = num;
+    _age = age;
+    strncpy(_name, name, sizeof(_name));
 }
