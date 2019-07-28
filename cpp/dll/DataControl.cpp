@@ -6,6 +6,7 @@
 #include "Node.hpp"
 #include "DataControl.h"
 #include "InitAndTerm.h"
+#include "UsageException.h"
 using namespace std;
 extern Node<Format> *head, *tail;
 extern InitAndTerm *cInt;
@@ -82,27 +83,43 @@ int DataControl::printNode(Node<Format> *head, Node<Format> *tail) {
     return 0;
 }
 int DataControl::selectInsert(void) {
-    int _num, _age;
+    int _num = 0, _age = 0;
     char _tempName[NAME_LENGTH] = { '\0', };
     char c[1] = { '\0', };
-    Format data(-1, -1, c);
-    cout << "input number: " << endl;
-    scanf("%d", &_num);
-    while (getchar() != '\n');
+    ERROR_TYPE ERRMSG = STATE_OK;
+    try{
+        Format data(-1, -1, c);
+        cout << "input number: " << endl;
+        scanf("%d", &_num);
+        while (getchar() != '\n');
+        if(_num < 0){
+            ERRMSG = MINUS_NUMBER;
+            throw UsageException(ERRMSG);
+        }
 
-    cout << "input name (limit length under " << NAME_LENGTH - 1 << "): " << endl;
-    fgets(_tempName, sizeof(_tempName), stdin);
-    if (_tempName[strlen(_tempName) - 1] == '\n') {
-        _tempName[strlen(_tempName) - 1] = '\0';
+        cout << "input name (limit length under " << NAME_LENGTH - 1 << "): " << endl;
+        fgets(_tempName, sizeof(_tempName), stdin);
+        if (_tempName[strlen(_tempName) - 1] == '\n') {
+            _tempName[strlen(_tempName) - 1] = '\0';
+        }
+        fflush(stdin);
+        if(strlen(_tempName) > NAME_LENGTH){
+            ERRMSG = LENGTH_OVER;
+            throw UsageException(ERRMSG);
+        }
+        cout << "input age: " << endl;
+        scanf("%d", &_age);
+        while (getchar() != '\n');
+        if(_age < 0 ){
+            ERRMSG = MINUS_NUMBER;
+            throw UsageException(ERRMSG);
+        }
+        data.setMember(_num, _age, _tempName);
+        insertNode(head, tail, data);
     }
-    fflush(stdin);
-
-    cout << "input age: " << endl;
-    scanf("%d", &_age);
-    while (getchar() != '\n');
-
-    data.setMember(_num, _age, _tempName);
-    insertNode(head, tail, data);
+    catch(UsageException& err){
+        err.ShowErrorInfo();
+    }
     return 0;
 }
 int DataControl::selectDelete() {

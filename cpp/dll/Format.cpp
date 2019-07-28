@@ -9,7 +9,7 @@ Format::Format(int num, int age, char *name) :_num(num), _age(age)
 }
 void Format::showData()
 {
-    cout <<"|"<<_num<<"|"<<_age<<"|"<<_name << "|" << endl;
+    cout << "|" <<_num<< "|" <<_name<< "|" <<_age<< "|" << endl;
 }
 int Format::getNum()
 {
