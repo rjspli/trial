@@ -4,7 +4,6 @@
 #include "commonType.h"
 #include "initAndTerm.h"
 #include "dataControl.h"
-#include <mcheck.h>
 
 #define TOT_MENU_CNT 4
 int vertexCreatedCnt = 0, vertexCnt = 0;
@@ -75,7 +74,6 @@ void selectEnd(graphType **graph){
     free(*graph);
 }
 int main(int argc, char *argv[]){
-    mtrace();
     graphType *graph;
     int selNum = 0, res = -1;
 
@@ -95,5 +93,4 @@ int main(int argc, char *argv[]){
     }
 
     return 0;
-    muntrace();
 }
