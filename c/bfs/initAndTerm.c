@@ -12,7 +12,11 @@ int createBFSGraph(graphType *g, int totalCnt) {
         g->nearListHead[v] = NULL;
         g->visited[v] = FALSE;
     }
+    dummy((void**)g->nearListHead, (void*)g->visited);
     return 0;
+}
+int dummy(void** a1, void *a2) {
+
 }
 int releaseBFSGraph(graphType *g) {
     free(g->nearListHead);
