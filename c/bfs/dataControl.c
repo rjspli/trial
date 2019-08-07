@@ -4,6 +4,9 @@
 #include "dataControl.h"
 #include "initAndTerm.h"
 
+LQType *Q;
+extern int vertexCreatedCnt;
+
 int insertTotalVertex(int *vCnt) {
     printf("Input total vertex count\n");
     while (1) {
@@ -27,6 +30,17 @@ int insertEachVertex(graphType *g, int v, int totalCnt) {
     }
     g->n++;
     return 0;
+}
+int requestTargetVertex() {
+    char destVertex;
+    int convVertex = 0;
+
+    printf("input one vertex to insert near list(ex. a). existed vertex will be overwrited.: ");
+    scanf("%c", &destVertex);
+    while (getchar() != '\n');
+    convVertex = (int)destVertex - 97;
+
+    return convVertex;
 }
 int inputVertexList(int **vList, int totalCnt, int vCnt) {
     int i = 0, lNum = 0, convDest = 0;
@@ -107,6 +121,17 @@ int sortNearList(int **vList, int totalCnt) {
     free(tempSort);
     return 0;
 }
+int eraseNearListOfVertex(graphType *g, int groupV) {
+    graphNode *curP = NULL, *nextP = NULL;
+    nextP = g->nearListHead[groupV];
+    while (nextP) {
+        curP = nextP;
+        nextP = curP->link;
+        free(curP);
+    }
+    g->nearListHead[groupV] = NULL;
+    return 0;
+}
 int insertEachEdge(graphType *g, int groupV, int v) {
     graphNode* node;
     if (groupV >= g->n || v > g->n) {
@@ -150,6 +175,7 @@ int vertexAcrossEdge(graphNode** tempV, int groupVnum){
 int printNearList(graphType* g) {
     int i;
     graphNode* p;
+
     printf("\n");
     for (i = 0; i < g->n; i++) {
         printf(" vertex list of %c ", i + 97);
@@ -201,7 +227,10 @@ int deQueue(LQType *LQ){
 }
 int bfsNearList(graphType *g, int v){
     graphNode *GN;
-    LQType *Q;
+    int i = 0;
+
+    if (g->visited == NULL)
+        return 0;
     Q = createLQ();
     g->visited[v] = TRUE;
     printf("\n%c ", v+65);
@@ -215,6 +244,9 @@ int bfsNearList(graphType *g, int v){
                 enQueue(Q, GN->vertex);
             }
         }
+    }
+    for (i = 0; i < vertexCreatedCnt; i++) {
+        g->visited[i] = FALSE;
     }
     releaseLQ(&Q);
     return 0;

@@ -3,10 +3,12 @@
 
 int insertTotalVertex(int *vCnt);
 int insertEachVertex(graphType *g, int v, int totalCnt);
+int requestTargetVertex();
 int inputVertexList(int **vList, int totalCnt, int vCnt);
 int isNotExistAnyVertex(int **compVlist, int totalCnt);
 int isSameDest(int **compVlist, int totalCnt, int dest);
 int sortNearList(int **vList, int totalCnt);
+int eraseNearListOfVertex(graphType *g, int groupV);
 int insertEachEdge(graphType *g, int groupV, int v);
 int checkExistAcrossEdge(graphType *g, int groupV, int totalVertex);
 int vertexAcrossEdge(graphNode** tempV, int groupVnum);

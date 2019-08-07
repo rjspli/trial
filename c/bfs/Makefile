@@ -5,11 +5,11 @@ LDFLAGS=
 all: dataControl.o initAndTerm.o main.o manageBfs
 
 dataControl.o: dataControl.c
-	$(CC) -c dataControl.c $(LDFLAGS)
+	$(CC) -c -g dataControl.c $(LDFLAGS)
 initAndTerm.o: initAndTerm.c
-	$(CC) -c initAndTerm.c $(LDFLAGS)
+	$(CC) -c -g initAndTerm.c $(LDFLAGS)
 main.o: main.c
-	$(CC) -c main.c $(LDFLAGS)
+	$(CC) -c -g main.c $(LDFLAGS)
 manageBfs:
 	$(CC) -o manageBfs main.o initAndTerm.o dataControl.o
 clean:
