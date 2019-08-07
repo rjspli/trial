@@ -5,6 +5,11 @@
 
 int createBFSGraph(graphType *g, int totalCnt) {
     int v;
+
+    if (g->n != 0) {
+        releaseNearListHead(g, g->n);
+        releaseBFSGraph(g);
+    }
     g->n = 0;
     g->nearListHead = (graphNode**)malloc(sizeof(graphNode*)*totalCnt);
     g->visited = (int*)malloc(sizeof(int)*totalCnt);
@@ -12,11 +17,7 @@ int createBFSGraph(graphType *g, int totalCnt) {
         g->nearListHead[v] = NULL;
         g->visited[v] = FALSE;
     }
-    dummy((void**)g->nearListHead, (void*)g->visited);
     return 0;
-}
-int dummy(void** a1, void *a2) {
-
 }
 int releaseBFSGraph(graphType *g) {
     free(g->nearListHead);
