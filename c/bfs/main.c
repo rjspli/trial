@@ -5,7 +5,7 @@
 #include "initAndTerm.h"
 #include "dataControl.h"
 
-#define TOT_MENU_CNT 4
+#define TOT_MENU_CNT 5
 int vertexCreatedCnt = 0, vertexCnt = 0;
 extern LQType *Q;
 
@@ -15,9 +15,10 @@ int getSelection(void){
     printf("\n");
     printf("1. input total vertex count\n");
     printf("2. input vertex and that of near vertex\n");
-    printf("3. print vertex and bfs\n");
-    printf("4. end\n");
-    printf("select menu:");
+    printf("3. delete near vertex of vertex\n");
+    printf("4. print vertex and bfs result\n");
+    printf("5. end\n");
+    printf("select menu: ");
     scanf("%d", &selectNum);
     while(getchar() != '\n');
 
@@ -39,13 +40,17 @@ void selectInputVertexCnt(graphType **graph) {
         insertEachVertex(*graph, i, vertexCreatedCnt);
     }
 }
-void selectInput(graphType **graph){
+void selectInputNearListOfVertex(graphType **graph){
     int *tempVl;
     int i = 0;
     vertexCnt = 0;
 
+    if ((*graph)->n == 0) {
+        printf(" !!!there is no vertex count\n");
+        return;
+    }
     createVertexList(&tempVl, vertexCreatedCnt);
-    vertexCnt = requestTargetVertex();
+    vertexCnt = requestTargetVertex(1);
     if ((*graph)->nearListHead[vertexCnt] != NULL) {
         eraseNearListOfVertex(*graph, vertexCnt);
     }
@@ -58,9 +63,24 @@ void selectInput(graphType **graph){
     }
     releaseVertexList(&tempVl);
 }
+void selectDeleteNearListOfVertex(graphType **graph) {
+    int i = 0;
+    vertexCnt = 0;
+
+    if ((*graph)->n == 0) {
+        printf(" !!!there is no vertex count\n");
+        return;
+    }
+    vertexCnt = requestTargetVertex(2);
+    deleteNearList(*graph, vertexCnt);
+}
 void selectPrint(graphType **graph) {
     vertexCnt = 0;
 
+    if ((*graph)->n == 0) {
+        printf(" !!!there is no vertex count\n");
+        return;
+    }
     printNearList(*graph);
     while (vertexCnt < vertexCreatedCnt) {
         checkExistAcrossEdge(*graph, vertexCnt, vertexCreatedCnt);
@@ -80,14 +100,14 @@ int main(int argc, char *argv[]){
     graph = (graphType*)malloc(sizeof(graphType));
     memset(graph, '\0', sizeof(graph));
     void (*pF[TOT_MENU_CNT])(graphType**) = {selectInputVertexCnt
-        , selectInput, selectPrint, selectEnd};
+        , selectInputNearListOfVertex, selectDeleteNearListOfVertex, selectPrint, selectEnd};
     while(selNum != TOT_MENU_CNT){
         selNum = getSelection();
         if(selNum > 0 && selNum < (TOT_MENU_CNT+1) ){
             exeFunc( pF, (selNum-1), &graph, &res );
             printf(" execute result: %d\n", res);
         }else{
-            printf("다시 선택하세요.\n");
+            printf(" !!!select menu again\n");
             continue;
         }
     }
