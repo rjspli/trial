@@ -17,7 +17,7 @@ int insertTotalVertex(int *vCnt) {
             break;
         }
         else {
-            printf("Total vertex must be maximum 10.\n");
+            printf(" !!!Total vertex must be over 0.\n");
             continue;
         }
     }
@@ -31,11 +31,14 @@ int insertEachVertex(graphType *g, int v, int totalCnt) {
     g->n++;
     return 0;
 }
-int requestTargetVertex() {
+int requestTargetVertex(int type) {
     char destVertex;
     int convVertex = 0;
 
-    printf("input one vertex to insert near list(ex. a). existed vertex will be overwrited.: ");
+    if(type == 1)
+        printf("input one vertex to insert near list(ex. a). existed vertex will be overwrited.: ");
+    else
+        printf("input one vertex to insert near list(ex. a).");
     scanf("%c", &destVertex);
     while (getchar() != '\n');
     convVertex = (int)destVertex - 97;
@@ -57,14 +60,14 @@ int inputVertexList(int **vList, int totalCnt, int vCnt) {
         convDest = (int)dest - 97;
         if (convDest == 29) {
             if(isNotExistAnyVertex(vList, totalCnt)){
-                printf("Least 1 vertex should be inserted\n");
+                printf(" !!!Least 1 vertex should be inserted\n");
                 continue;
             }else{
                 break;
             }
         }
         if (isSameDest(vList, totalCnt, convDest)) {
-            printf("Already input near vertex.\n");
+            printf(" !!!Already input near vertex.\n");
             continue;
         }
         else {
@@ -94,6 +97,40 @@ int isSameDest(int **compVlist, int totalCnt, int dest) {
         }
     }
     return result;
+}
+int deleteNearList(graphType *g, int groupV) {
+    int i = 0, lNum = 0, convDest = 0;
+    char dest;
+    graphNode *curP = NULL, *nextP = NULL;
+
+    nextP = g->nearListHead[groupV];
+    if (nextP != NULL) {
+        printf("Input one near vertex of \"%c\" to delete [ex) a enter]. \n", groupV + 97);
+        printf(" ");
+        scanf("%c", &dest);
+        while (getchar() != '\n');
+        convDest = (int)dest - 97;
+        if (nextP->vertex == convDest) {
+            curP = nextP;
+            nextP = curP->link;
+            g->nearListHead[groupV] = nextP;
+            free(curP);
+        }
+        while (nextP) {
+            curP = nextP;
+            nextP = curP->link;
+            if (nextP != NULL && nextP->vertex == convDest) {
+                curP->link = nextP->link;
+                free(nextP);
+                nextP = curP->link;
+            }
+        }
+    }
+    else {
+        printf(" !!!list is empty\n");
+    }
+
+    return 0;
 }
 int sortNearList(int **vList, int totalCnt) {
     int *tempSort = (int*)malloc(sizeof(int)*totalCnt);
@@ -190,7 +227,7 @@ int printNearList(graphType* g) {
 }
 int isQueueEmpty(LQType *LQ){
     if(LQ->front == NULL){
-        printf("\nQueue empty.\n");
+        printf("\n !!!Queue empty.\n");
         return 1;
     }
     else{
@@ -229,8 +266,6 @@ int bfsNearList(graphType *g, int v){
     graphNode *GN;
     int i = 0;
 
-    if (g->visited == NULL)
-        return 0;
     Q = createLQ();
     g->visited[v] = TRUE;
     printf("\n%c ", v+65);
