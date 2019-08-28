@@ -11,4 +11,9 @@ typedef struct _node{
     Data* data;
 }Node;
 
+typedef enum {
+    THREAD_DISABLE,
+    THREAD_ENABLE,
+}THREAD_STATE;
+
 #endif
