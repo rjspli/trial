@@ -3,8 +3,11 @@
 #include "commonType.h"
 #include "dataControl.h"
 #include "initAndTerm.h"
+#include <pthread.h>
 
 extern int getData(void);
+pthread_t pThread;
+THREAD_STATE existThr = THREAD_DISABLE;
 
 void selectPrint(Node** root){
     printf("\n|번호|\n");
@@ -41,6 +44,42 @@ void selectDelete(Node** root){
 
 void selectEnd(Node** root){
     releaseNode(root);
+}
+
+void selectInterConnect() {
+    createThread();
+}
+
+void createThread() {
+    int param = 0;
+    int thrCreateRes = 0;
+
+    if (existThr == THREAD_ENABLE) {
+        existThr = THREAD_DISABLE;
+    }
+    else {
+        thrCreateRes = pthread_create(&pThread, NULL
+                , threadFunc, (void*)&param);
+        pthread_detach(pThread);
+        existThr = THREAD_ENABLE;
+    }
+}
+
+void* threadFunc(void* threadFuncArg) {
+    int cleanUpParam = 0;
+
+    pthread_cleanup_push(threadCleanUp, (void *)&cleanUpParam);
+    while (1) {
+        if (existThr == THREAD_DISABLE) {
+            break;
+        }
+    }
+    pthread_exit(NULL);
+    pthread_cleanup_pop(0);
+}
+
+void threadCleanUp(void *cleanUpArg) {
+    printf("\n %s %d\n",__FUNCTION__, *((int*)cleanUpArg));
 }
 
 void printNode(Node** root){

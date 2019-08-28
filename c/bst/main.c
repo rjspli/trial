@@ -3,7 +3,8 @@
 #include "initAndTerm.h"
 #include "dataControl.h"
 
-#define TOT_MENU_CNT 4
+#define TOT_MENU_CNT 5
+extern THREAD_STATE existThr;
 
 int getSelection(void){
     int selectNum = 0;
@@ -12,6 +13,12 @@ int getSelection(void){
     printf("2. 입력\n");
     printf("3. 삭제\n");
     printf("4. 종료\n");
+    if (existThr == THREAD_DISABLE) {
+        printf("5. 상호통신(비활성중)\n");
+    }
+    else {
+        printf("5. 상호통신(활성중)\n");
+    }
     printf("메뉴선택:");
     scanf("%d", &selectNum);
     while(getchar() != '\n');
@@ -31,9 +38,9 @@ int main(int argc, char* argv[]){
     int selNum = 0;
     Node* root = NULL;
     void (*pF[TOT_MENU_CNT])(Node**) = {selectPrint, selectInsert
-        , selectDelete, selectEnd};
+        , selectDelete, selectEnd, selectInterConnect };
     int res = -1;
-    while(selNum != TOT_MENU_CNT){
+    while(selNum != TOT_MENU_CNT -1){
         selNum = getSelection();
         if(selNum > 0 && selNum < (TOT_MENU_CNT+1) ){
             exeFunc(pF, (selNum-1), &root, &res);
