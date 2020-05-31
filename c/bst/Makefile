@@ -1,6 +1,7 @@
 #CC:=arm-linux-gcc
 CC:=gcc
 LDFLAGS=-lpthread
+LDFLAGS+= `pkg-config --cflags --libs gtk+-2.0`
 
 all: dataControl.o initAndTerm.o main.o dataManageBst
 

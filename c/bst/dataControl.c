@@ -1,3 +1,4 @@
+#include <gtk/gtk.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "commonType.h"
@@ -8,6 +9,9 @@
 extern int getData(void);
 pthread_t pThread;
 THREAD_STATE existThr = THREAD_DISABLE;
+
+guint tid;
+int num = 0;
 
 void selectPrint(Node** root){
     printf("\n|번호|\n");
@@ -50,11 +54,18 @@ void selectInterConnect() {
     createThread();
 }
 
+void selectTransfer() {
+    transferData();
+}
+
 void createThread() {
     int param = 0;
     int thrCreateRes = 0;
 
     if (existThr == THREAD_ENABLE) {
+        gtk_main_quit();
+        usleep(500000);
+        pthread_cancel(pThread);
         existThr = THREAD_DISABLE;
     }
     else {
@@ -68,6 +79,7 @@ void createThread() {
 void* threadFunc(void* threadFuncArg) {
     int cleanUpParam = 0;
 
+    gtk_main();
     pthread_cleanup_push(threadCleanUp, (void *)&cleanUpParam);
     while (1) {
         if (existThr == THREAD_DISABLE) {
@@ -76,6 +88,7 @@ void* threadFunc(void* threadFuncArg) {
     }
     pthread_exit(NULL);
     pthread_cleanup_pop(0);
+
 }
 
 void threadCleanUp(void *cleanUpArg) {
@@ -183,4 +196,19 @@ Node* searchSameNode(Node** root, int num){
     }else{
         searchSameNode( &(temp->right), num);
     }
+}
+int transferData() {
+    gpointer sendNum = &num;
+    tid = g_timeout_add(2000, cbTransferData, sendNum);
+    return 0;
+}
+gboolean cbTransferData(gpointer argv) {
+    int *pNum = (int *)argv;
+    printf("\n");
+    printf("================\n");
+    printf("timeout %d\n", *pNum +1);
+    printf("================\n");
+    *(int *)pNum = *(int *)pNum + 1;
+    g_source_remove(tid);
+    return (gboolean)FALSE;
 }
