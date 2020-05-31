@@ -1,9 +1,10 @@
+#include <gtk/gtk.h>
 #include <stdio.h>
 #include "commonType.h"
 #include "initAndTerm.h"
 #include "dataControl.h"
 
-#define TOT_MENU_CNT 5
+#define TOT_MENU_CNT 6
 extern THREAD_STATE existThr;
 
 int getSelection(void){
@@ -18,6 +19,7 @@ int getSelection(void){
     }
     else {
         printf("5. 상호통신(활성중)\n");
+        printf("6. 타임아웃(2sec) 테스트\n");
     }
     printf("메뉴선택:");
     scanf("%d", &selectNum);
@@ -35,16 +37,21 @@ int getData(void){
 }
 
 int main(int argc, char* argv[]){
+    gtk_init(NULL, NULL);
     int selNum = 0;
     Node* root = NULL;
     void (*pF[TOT_MENU_CNT])(Node**) = {selectPrint, selectInsert
-        , selectDelete, selectEnd, selectInterConnect };
+        , selectDelete, selectEnd, selectInterConnect, selectTransfer };
     int res = -1;
-    while(selNum != TOT_MENU_CNT -1){
+    //while(selNum != TOT_MENU_CNT -1){
+    while (1) {
         selNum = getSelection();
         if(selNum > 0 && selNum < (TOT_MENU_CNT+1) ){
             exeFunc(pF, (selNum-1), &root, &res);
             printf("실행결과:%d\n", res);
+            if (selNum == 4) {
+                break;
+            }
         }else{
             printf("다시 선택하세요.\n");
             continue;
